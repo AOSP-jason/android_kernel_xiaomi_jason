@@ -1784,9 +1784,8 @@ static u32 dib7000p_get_time_us(struct dvb_frontend *demod)
 {
 	struct dtv_frontend_properties *c = &demod->dtv_property_cache;
 	u64 time_us, tmp64;
-	u32 tmp, denom;
-	int guard, rate_num, rate_denum = 1, bits_per_symbol;
-	int interleaving = 0, fft_div;
+	u32 denom;
+	int guard, rate_num, rate_denum = 1, bits_per_symbol, fft_div;
 
 	switch (c->guard_interval) {
 	case GUARD_INTERVAL_1_4:
@@ -1855,8 +1854,6 @@ static u32 dib7000p_get_time_us(struct dvb_frontend *demod)
 		break;
 	}
 
-	interleaving = interleaving;
-
 	denom = bits_per_symbol * rate_num * fft_div * 384;
 
 	/* If calculus gets wrong, wait for 1s for the next stats */
@@ -1870,9 +1867,6 @@ static u32 dib7000p_get_time_us(struct dvb_frontend *demod)
 	time_us = time_us + tmp64;
 	time_us += denom / 2;
 	do_div(time_us, denom);
-
-	tmp = 1008 * 96 * interleaving;
-	time_us += tmp + tmp / guard;
 
 	return time_us;
 }
