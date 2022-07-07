@@ -328,7 +328,7 @@ static enum fe_stv0900_error stv0900_set_mclk(struct stv0900_internal *intp, u32
 	stv0900_write_reg(intp, R0900_P2_F22TX, m_div);
 	stv0900_write_reg(intp, R0900_P2_F22RX, m_div);
 
-	if ((intp->errs))
+	if (intp->errs)
 		return STV0900_I2C_ERROR;
 
 	return STV0900_NO_ERROR;

@@ -11059,7 +11059,7 @@ ctrl_power_mode(struct drx_demod_instance *demod, enum drx_power_mode *mode)
 	}
 
 	/* Check if device needs to be powered up */
-	if ((common_attr->current_power_mode != DRX_POWER_UP)) {
+	if (common_attr->current_power_mode != DRX_POWER_UP) {
 		rc = power_up_device(demod);
 		if (rc != 0) {
 			pr_err("error %d\n", rc);
@@ -11067,7 +11067,7 @@ ctrl_power_mode(struct drx_demod_instance *demod, enum drx_power_mode *mode)
 		}
 	}
 
-	if ((*mode == DRX_POWER_UP)) {
+	if (*mode == DRX_POWER_UP) {
 		/* Restore analog & pin configuartion */
 
 		/* Initialize default AFE configuartion for VSB */
@@ -11136,7 +11136,7 @@ ctrl_power_mode(struct drx_demod_instance *demod, enum drx_power_mode *mode)
 			goto rw_error;
 		}
 
-		if ((*mode != DRX_POWER_UP)) {
+		if (*mode != DRX_POWER_UP) {
 			/* Initialize HI, wakeup key especially before put IC to sleep */
 			rc = init_hi(demod);
 			if (rc != 0) {
